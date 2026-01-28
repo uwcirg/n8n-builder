@@ -1,0 +1,17 @@
+# docker continuous delivery
+# deliver docker images to configured repo with tags to match branches and git tags
+---
+name: Build & Deliver
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout git commit
+        uses: actions/checkout@master
+        with:
+          fetch-depth: 0
+
+      - name: Build docker image
+        working-directory: n8n
+        run: pnpm build:docker
