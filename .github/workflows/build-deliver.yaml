@@ -14,4 +14,4 @@ jobs:
 
       - name: Build docker image
         working-directory: n8n
-        run: pnpm build:docker
+        run: npm build:docker
