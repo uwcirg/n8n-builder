@@ -16,7 +16,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: n8n
-        run: npm clean-install
+        run: npm install
 
       - name: Build docker image
         working-directory: n8n
