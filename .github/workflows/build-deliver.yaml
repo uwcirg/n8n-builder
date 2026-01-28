@@ -1,0 +1,49 @@
+# docker continuous delivery
+# deliver docker images to configured repo with tags to match branches and git tags
+---
+name: Build & Deliver
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout git commit
+        uses: actions/checkout@master
+        with:
+          fetch-depth: 0
+          submodules: recursive
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - run: npm install -g pnpm
+      - run: pnpm install
+        working-directory: n8n
+
+
+      - name: Build docker image
+        working-directory: n8n
+        run: pnpm build:docker
+
+
+      - name: Tag Docker image
+        run: |
+          # Use branch name if on branch, else use tag
+          IMAGE_TAG="${GITHUB_REF_NAME}"
+          # Replace slashes in branch names (e.g., feature/xyz -> feature-xyz)
+          IMAGE_TAG="${IMAGE_TAG//\//-}"
+          docker tag n8nio/n8n:local ghcr.io/${{ github.repository }}:${IMAGE_TAG}
+
+      - name: Log into GHCR
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push Docker image to GHCR
+        run: |
+          IMAGE_TAG="${GITHUB_REF_NAME}"
+          IMAGE_TAG="${IMAGE_TAG//\//-}"
+          docker push ghcr.io/${{ github.repository }}:${IMAGE_TAG}
