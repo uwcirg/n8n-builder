@@ -19,8 +19,7 @@ jobs:
           node-version: 22
 
       - name: Install dependencies
-        working-directory: n8n
-        run: npm install
+        run: cd n8n && npm install
 
       - name: Build docker image
         working-directory: n8n
