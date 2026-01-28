@@ -13,6 +13,11 @@ jobs:
           fetch-depth: 0
           submodules: recursive
 
+
+      - name: Install dependencies
+        working-directory: n8n
+        run: npm clean-install
+
       - name: Build docker image
         working-directory: n8n
         run: npm run build:docker
