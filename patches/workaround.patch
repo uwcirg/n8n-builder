@@ -1,0 +1,14 @@
+diff --git a/packages/cli/src/modules/sso-oidc/oidc.service.ee.ts b/packages/cli/src/modules/sso-oidc/oidc.service.ee.ts
+index 8c04f3298f..d3758c55e8 100644
+--- a/packages/cli/src/modules/sso-oidc/oidc.service.ee.ts
++++ b/packages/cli/src/modules/sso-oidc/oidc.service.ee.ts
+@@ -340,6 +340,9 @@ export class OidcService {
+ 		if (instanceRole) {
+ 			await this.provisioningService.provisionInstanceRoleForUser(user, instanceRole);
+ 		}
++		else if (provisioningConfig.scopesProvisionInstanceRole) {
++			throw new ForbiddenError('Instance role claim missing');
++		}
+ 		if (projectRoleMapping) {
+ 			await this.provisioningService.provisionProjectRolesForUser(user.id, projectRoleMapping);
+ 		}
