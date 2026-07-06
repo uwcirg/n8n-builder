@@ -1,9 +1,10 @@
+# docker image to build custom n8n task runner
+# https://docs.n8n.io/deploy/host-n8n/configure-n8n/set-up-task-runners#adding-extra-dependencies
+
 FROM n8nio/runners:local
 
 USER root
-# RUN cd /opt/runners/task-runner-javascript && pnpm add moment uuid
 
 # TODO move to install-requires/lockfiles
 RUN cd /opt/runners/task-runner-python && uv pip install pypdfium2
-# COPY n8n-task-runners.json /etc/n8n-task-runners.json
 USER runner
