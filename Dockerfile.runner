@@ -1,7 +1,9 @@
 # docker image to build custom n8n task runner
 # https://docs.n8n.io/deploy/host-n8n/configure-n8n/set-up-task-runners#adding-extra-dependencies
 
-FROM n8nio/runners:local
+#FROM n8nio/runners:local
+FROM n8nio/runners:2.29.2
+
 
 USER root
 
