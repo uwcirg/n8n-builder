@@ -5,9 +5,8 @@ FROM n8nio/runners:local
 
 USER root
 
-# fix missing src issue; install task-runner-python module
-RUN cd /opt/runners/task-runner-python && \
-    uv pip install --python .venv/bin/python .
+# fix missing src issue; copy task-runner-python module
+COPY --from=n8nio/runners:2.29.2 /opt/runners/task-runner-python/.venv/lib/python3.13/site-packages/src /opt/runners/task-runner-python/.venv/lib/python3.13/site-packages/src
 
 # TODO move to install-requires/lockfiles
 RUN cd /opt/runners/task-runner-python && uv pip install pypdfium2 pillow
