@@ -6,5 +6,5 @@ FROM n8nio/runners:local
 USER root
 
 # TODO move to install-requires/lockfiles
-RUN cd /opt/runners/task-runner-python && uv pip install pypdfium2
+RUN cd /opt/runners/task-runner-python && uv pip install pypdfium2 pillow
 USER runner
